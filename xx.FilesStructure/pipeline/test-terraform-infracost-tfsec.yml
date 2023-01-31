@@ -1,0 +1,81 @@
+jobs:
+- job: Job_1
+  displayName: Agent job 1
+  pool:
+    vmImage: ubuntu-latest
+  steps:
+  - checkout: self
+  - task: TerraformInstaller@0
+    displayName: Install Terraform latest
+  - task: SonarQubePrepare@5
+    displayName: Prepare analysis on SonarQube
+    enabled: True
+    inputs:
+      SonarQube: '#{id connection sonar service}#'
+      scannerMode: CLI
+      configMode: manual
+      cliProjectKey: "#{terraform-project}#"
+      projectKey: "#{terraform-project}#"
+      cliProjectName: "#{terraform-project}#"
+      projectName: "#{terraform-project}#"
+  - task: TerraformTaskV3@3
+    displayName: 'Terraform : init'
+    inputs:
+      workingDirectory: "#{source_path}#"
+      backendServiceArm: '#{Service connection}#'
+      backendAzureRmResourceGroupName: tfstate
+      backendAzureRmStorageAccountName: storageterraform
+      backendAzureRmContainerName: terraformstate
+      backendAzureRmKey: "#{project}#"/terraform.tfstate
+  - task: TerraformTaskV3@3
+    displayName: 'Terraform : plan'
+    inputs:
+      command: plan
+      workingDirectory: "#{source_path}#"
+      commandOptions: -out=tfplan
+      environmentServiceNameAzureRM: '#{Service connection}#'
+  - task: SonarQubeAnalyze@5
+    displayName: Run Code Analysis
+    enabled: False
+  - task: Bash@3
+    displayName: install tfsec
+    inputs:
+      targetType: inline
+      script: >2
+
+        wget -q -O tfsec https://github.com/aquasecurity/tfsec/releases/download/v0.58.6/tfsec-linux-amd64  \
+          && chmod +x ./tfsec
+      workingDirectory: "#{source_path}#"
+  - task: Bash@3
+    displayName: tfsec
+    inputs:
+      targetType: inline
+      script: "\n./#{source_path}#/tfsec .  --soft-fail --format junit >> junit.xml \n"
+  - task: PublishTestResults@2
+    displayName: Publish Test Results **/junit.xml
+    inputs:
+      testResultsFiles: '**/junit.xml'
+      testRunTitle: TFSEC
+  - task: InfracostSetup@1
+    displayName: InfracostSetup 0.10.x
+    inputs:
+      apiKey: '#{Infracost key}#'
+  - task: Bash@3
+    displayName: infracost
+    inputs:
+      targetType: inline
+      script: infracost breakdown --path=tfplan --format=html --out-file=infracost.html --show-skipped
+      workingDirectory: "#{source_path}#"
+  - task: PublishHtmlReport@1
+    displayName: Publish Html Report
+    inputs:
+      tabName: Infracost
+      reportDir: "#{source_path}#"/infracost.html
+  - task: CopyFiles@2
+    displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
+    inputs:
+      SourceFolder: "#{source_path}#"
+      TargetFolder: $(Build.ArtifactStagingDirectory)
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: drop'
+...

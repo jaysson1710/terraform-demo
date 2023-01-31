@@ -1,0 +1,103 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "value": "eastus"
+        },
+        "managedInstanceName": {
+            "value": "demoappjason"
+        },
+        "deployInExistingSubnet": {
+            "value": false
+        },
+        "virtualNetworkResourceGroupName": {
+            "value": "testarm"
+        },
+        "virtualNetworkName": {
+            "value": "vnet-demoappjason"
+        },
+        "subnetName": {
+            "value": "ManagedInstance"
+        },
+        "skuName": {
+            "value": "GP_Gen5"
+        },
+        "skuEdition": {
+            "value": "GeneralPurpose"
+        },
+        "hardwareFamily": {
+            "value": "Gen5"
+        },
+        "storageSizeInGB": {
+            "value": 32
+        },
+        "vCores": {
+            "value": 4
+        },
+        "licenseType": {
+            "value": "BasePrice"
+        },
+        "dnsZonePartner": {
+            "value": ""
+        },
+        "collation": {
+            "value": "SQL_Latin1_General_CP1_CI_AS"
+        },
+        "timezoneId": {
+            "value": "UTC"
+        },
+        "proxyOverride": {
+            "value": "Proxy"
+        },
+        "publicDataEndpointEnabled": {
+            "value": false
+        },
+        "nsgForPublicEndpoint": {
+            "value": "allowFromAzureCloudTo3342NSG"
+        },
+        "minimalTlsVersion": {
+            "value": "1.2"
+        },
+        "administratorLogin": {
+            "value": "jason"
+        },
+        "administratorLoginPassword": {
+            "value": null
+        },
+        "administrators": {
+            "value": {}
+        },
+        "managedInstanceTags": {
+            "value": {}
+        },
+        "requestedBackupStorageRedundancy": {
+            "value": "Local"
+        },
+        "maintenanceConfigurationId": {
+            "value": "/subscriptions/d387d7c4-3dc1-4a04-b494-176559453375/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default"
+        },
+        "zoneRedundant": {
+            "value": false
+        },
+        "enableADS": {
+            "value": false
+        },
+        "enableVA": {
+            "value": false
+        },
+        "identity": {
+            "value": {
+                "type": "SystemAssigned"
+            }
+        },
+        "primaryUserAssignedIdentityId": {
+            "value": ""
+        },
+        "servicePrincipal": {
+            "value": {
+                "type": "SystemAssigned"
+            }
+        }
+    }
+}

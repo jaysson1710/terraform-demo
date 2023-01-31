@@ -1,0 +1,4 @@
+storage_account_name = "storageterraformjason"
+container_name       = "terraformstate"
+key                  = "demo2/terraform.tfstate"
+access_key           = "#{token}#"
