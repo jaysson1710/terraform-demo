@@ -41,7 +41,7 @@ Si esta trabajando con Windows, mediante descarga y configuración de la variabl
 ```powershell
 $PSVersionTable.PSVersion
 $path = "c:\temp\"
-iwr  https://releases.hashicorp.com/terraform/1.2.8/terraform_1.2.8_windows_amd64.zip -O "$($path)\terraform.zip"
+Start-BitsTransfer -Source "https://releases.hashicorp.com/terraform/1.3.7/terraform_1.3.7_windows_amd64.zip" -Destination "$($path)\terraform.zip"
 Expand-Archive -LiteralPath "$($path)\terraform.zip" -DestinationPath $path -Force
 $env:PATH = $env:PATH + ";" + $path
 ```
