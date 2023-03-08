@@ -43,17 +43,21 @@ jobs:
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       run: terraform init
+      working-directory: XX.ejercicio
       
 
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
       run: terraform fmt -check
+      working-directory: XX.ejercicio
       
     - name: Terraform validate
       run: terraform validate
+      working-directory: XX.ejercicio
       
     - name: terraform plan
       run: terraform plan -out dev.tfplan
+      working-directory: XX.ejercicio
       env:
         ARM_CLIENT_ID: ${{ secrets.SERVICE_PRINICIPAL }}
         ARM_CLIENT_SECRET: ${{ secrets.AZURE_PASS }}
