@@ -17,7 +17,7 @@ jobs:
   terraform:
     env:
       TF_LOG: TRACE
-      ARM_CLIENT_ID: ${{ secrets.SERVICE_PRINCIAPL }}
+      ARM_CLIENT_ID: ${{ secrets.SERVICE_PRINICIPAL }}
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_PASS }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION }}
       ARM_TENANT_ID: ${{ secrets.AZURE_TENANT }}
@@ -53,5 +53,9 @@ jobs:
       
     - name: terraform plan
       run: terraform plan -out=dev.tfplan
-        
+      env:
+        ARM_CLIENT_ID: ${{ secrets.SERVICE_PRINICIPAL }}
+        ARM_CLIENT_SECRET: ${{ secrets.AZURE_PASS }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION }}
+        ARM_TENANT_ID: ${{ secrets.AZURE_TENANT }}
 
