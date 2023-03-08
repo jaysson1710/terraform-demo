@@ -54,7 +54,20 @@ jobs:
     - name: Terraform validate
       run: terraform validate
       working-directory: XX.ejercicio
-      
+    
+    - name: tfsec action
+      uses: aquasecurity/tfsec-action@v1.0.3
+      with:
+        working-directory: XX.ejercicio
+        format: junit
+        
+    
+    
+    - name: JUnit Report Action
+      uses: mikepenz/action-junit-report@v3.7.5
+      with:
+        report_paths: '**/XX.ejercicio/*.xml'
+    
     - name: terraform plan
       run: terraform plan -out dev.tfplan
       working-directory: XX.ejercicio
