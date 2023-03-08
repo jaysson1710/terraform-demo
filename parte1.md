@@ -12,7 +12,7 @@
     -   1 Vnet
     -   2 Subnet
     -   1 SQl Database
-
+>
 ![](./images//parte1/modelo.png)
 >
 ### Actividades
