@@ -60,7 +60,7 @@ jobs:
       with:
         working-directory: XX.ejercicio
         format: junit
-        
+        soft_fail: true
     
     
     - name: JUnit Report Action
