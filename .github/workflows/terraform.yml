@@ -56,9 +56,9 @@ jobs:
       working-directory: XX.ejercicio
     
     - name: TFSEC
-      run: 
+      run: |
         wget -q -O tfsec https://github.com/aquasecurity/tfsec/releases/download/v0.58.6/tfsec-linux-amd64  \
-        && chmod +x ./tfsec
+        && chmod +x ./tfsec 
         ./tfsec .  --soft-fail --format junit >> junit.xml 
       working-directory: XX.ejercicio
     
@@ -66,7 +66,7 @@ jobs:
     - name: JUnit Report Action
       uses: mikepenz/action-junit-report@v3.7.5
       with:
-        report_paths: '**/XX.ejercicio/*.xml'
+        report_paths: '**/XX.ejercicio/junit.xml'
     
     - name: terraform plan
       run: terraform plan -out dev.tfplan
