@@ -55,12 +55,12 @@ jobs:
       run: terraform validate
       working-directory: XX.ejercicio
     
-    - name: tfsec action
-      uses: aquasecurity/tfsec-action@v1.0.3
-      with:
-        working-directory: XX.ejercicio
-        format: junit
-        soft_fail: true
+    - name: TFSEC
+      run: 
+        wget -q -O tfsec https://github.com/aquasecurity/tfsec/releases/download/v0.58.6/tfsec-linux-amd64  \
+        && chmod +x ./tfsec
+        ./tfsec .  --soft-fail --format junit >> junit.xml 
+      working-directory: XX.ejercicio
     
     
     - name: JUnit Report Action
