@@ -68,6 +68,12 @@ jobs:
       with:
         report_paths: '**/XX.ejercicio/junit.xml'
     
+    - name: Publish Test Results
+      uses: EnricoMi/publish-unit-test-result-action@v2
+      with:
+        files: |
+          XX.ejercicio/junit.xml
+          
     - name: terraform plan
       run: terraform plan -out dev.tfplan
       working-directory: XX.ejercicio
